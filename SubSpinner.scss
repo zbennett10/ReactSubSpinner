@@ -1,0 +1,128 @@
+//size and position mixins to help with different sizing classes '.rss-xs, .rss-sm, etc'
+@mixin sizeContainer($containerSize: 210px) {
+  width: $containerSize;
+  height: $containerSize;
+}
+
+@mixin sizeAndPositionBlade($bladeSize: 40px, $centerPointSize: 25px) {
+  height: $bladeSize;
+  width: $bladeSize * 2;
+  border-top-left-radius: $bladeSize * 2;
+  border-top-right-radius: $bladeSize * 2;
+  top: $bladeSize + $centerPointSize;
+  left: $centerPointSize;
+}
+
+@mixin sizeAndPositionCenterPoint($bladeSize: 40px, $centerPointSize: 25px) {
+  @include sizeContainer($centerPointSize);
+  top: $bladeSize * 2 + $centerPointSize / 2;
+  left: $bladeSize * 2 + $centerPointSize / 2;
+}
+
+@mixin sizeInnerPoint($size: 25px) {
+  width: $size / 2.5;
+  height: $size / 2.5;
+}
+
+@keyframes rotate {
+  from {transform: rotate(360deg)}
+  to {transform: rotate(0deg)}
+}
+
+//default class, size - medium
+.rss-container {
+  @include sizeContainer();
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+
+  .rss-blade-container {
+      @include sizeContainer();
+       animation: 1.5s linear infinite rotate;
+
+    .rss-blade {
+        @include sizeAndPositionBlade();
+        position: absolute;
+        background: #7a7b7c -webkit-radial-gradient(20% 80%, 60% 60%, rgba(255,255,255,.15), rgba(255,255,255,0));
+        box-shadow:0px 0px 0px 2px;
+        z-index: -1;
+    }
+  
+    .rss-blade-2 {transform: rotate(-51deg); transform-origin: 100% 100%;} 
+    .rss-blade-3 {transform: rotate(-102deg); transform-origin: 100% 100%;} 
+    .rss-blade-4 {transform: rotate(-153deg); transform-origin: 100% 100%} 
+    .rss-blade-5 {transform: rotate(-204deg); transform-origin: 100% 100%} 
+    .rss-blade-6 {transform: rotate(-255deg); transform-origin: 100% 100%} 
+    .rss-blade-7 {transform: rotate(-306deg); transform-origin: 100% 100%}
+  }
+  
+  .rss-center-point {
+    @include sizeAndPositionCenterPoint();
+    border-radius: 50%;
+    background: #b5a642 linear-gradient(to bottom,#b5a642 25%,#f7f1a0 100%);
+    border: 1px solid black;
+    box-shadow:0px 0px 0px 1px;
+    position: absolute;
+    z-index: 100;
+    
+    .rss-inner-point {
+      @include sizeInnerPoint();
+      border-radius: 50%;
+      background: black linear-gradient(to bottom, black 25%, #7a7b7c 100%);
+      position: absolute;
+      left: 0; right: 0; bottom: 0; top: 0;
+      margin: auto;
+    }
+  }
+}
+
+//varying size classes
+.rss-xl {
+  @include sizeContainer(400px);
+  .rss-blade-container {
+    @include sizeContainer(400px);
+    .rss-blade {@include sizeAndPositionBlade(74px, 47.6px);}
+  }
+  .rss-center-point {
+    @include sizeAndPositionCenterPoint(74px, 47.6px);
+    .rss-inner-point {@include sizeInnerPoint(47.6px);}
+  }
+}
+
+.rss-lg {
+  @include sizeContainer(30px);
+  .rss-blade-container {
+    @include sizeContainer(300px);
+    .rss-blade {@include sizeAndPositionBlade(55.55px, 35.7px);}
+  }
+  .rss-center-point {
+    @include sizeAndPositionCenterPoint(55.55px, 35.7px);
+    .rss-inner-point {@include sizeInnerPoint(35.7px);}
+  }
+}
+
+
+.rss-sm {
+  @include sizeContainer(100px);
+  .rss-blade-container {
+    @include sizeContainer(100px);
+    .rss-blade {@include sizeAndPositionBlade(19.04px, 11.9px);}
+  }
+  .rss-center-point {
+    @include sizeAndPositionCenterPoint(19.04px, 11.9px);
+    .rss-inner-point {@include sizeInnerPoint(11.9px);}
+  }
+}
+
+.rss-xs {
+  @include sizeContainer(50px);
+  .rss-blade-container {
+    @include sizeContainer(50px);
+    .rss-blade {@include sizeAndPositionBlade(9.52px, 5.95px);}
+  }
+  .rss-center-point {
+    @include sizeAndPositionCenterPoint(9.52px, 5.95px);
+    .rss-inner-point {@include sizeInnerPoint(5.95px);}
+  }
+}
+
